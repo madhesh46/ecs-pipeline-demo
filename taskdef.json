@@ -1,0 +1,34 @@
+{
+  "family": "nginx-task",
+  "networkMode": "bridge",
+  "containerDefinitions": [
+    {
+      "name": "nginx-container",
+      "image": "madhesh23/my-custom-nginx:1.0",
+      "cpu": 256,
+      "memory": 512,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "systemControls": []
+    }
+  ],
+  "volumes": [],
+  "placementConstraints": [],
+  "requiresCompatibilities": ["EC2"],
+  "tags": [
+    {
+      "key": "Project",
+      "value": "ECSPipelineDemo"
+    }
+  ]
+}
+

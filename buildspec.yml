@@ -1,21 +1,26 @@
 version: 0.2
 
+env:
+  variables:
+    DOCKERHUB_USERNAME: madhesh23
+    DOCKERHUB_PASSWORD: Maddy@9180
+
 phases:
+  install:
+    runtime-versions:
+      docker: 20
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com
-      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo
-      - IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+      - echo Logging in to Docker Hub...
+      - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
   build:
     commands:
-      - echo Build started on `date`
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - echo Build phase skipped (using prebuilt image madhesh23/my-custom-nginx:1.0)
   post_build:
     commands:
-      - echo Pushing image...
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - printf '[{"name":"nginx-container","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - echo Build completed successfully
+
 artifacts:
-  files: imagedefinitions.json
+  files:
+    - '**/*'
 
