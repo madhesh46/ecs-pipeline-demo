@@ -1,26 +1,23 @@
 version: 0.2
 
-env:
-  variables:
-    DOCKERHUB_USERNAME: madhesh23
-    DOCKERHUB_PASSWORD: Maddy@9180
-
 phases:
-  install:
-    runtime-versions:
-      docker: 20
   pre_build:
     commands:
-      - echo Logging in to Docker Hub...
-      - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 699582537231.dkr.ecr.ap-south-1.amazonaws.com
   build:
     commands:
-      - echo Build phase skipped (using prebuilt image madhesh23/my-custom-nginx:1.0)
+      - echo Building Docker image...
+      - docker build -t ecs-pipeline-demo .
+      - docker tag ecs-pipeline-demo:latest 699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo:latest
   post_build:
     commands:
-      - echo Build completed successfully
+      - echo Pushing Docker image to ECR...
+      - docker push 699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo:latest
+      - echo Writing imagedefinitions.json...
+      - printf '[{"name":"ecs-demo-container","imageUri":"%s"}]' 699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo:latest > imagedefinitions.json
 
 artifacts:
   files:
-    - '**/*'
+    - imagedefinitions.json
 
