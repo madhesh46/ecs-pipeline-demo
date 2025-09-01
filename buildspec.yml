@@ -4,19 +4,18 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.ap-south-1.amazonaws.com
-      - REPOSITORY_URI=<your-account-id>.dkr.ecr.ap-south-1.amazonaws.com/ecs-demo
-      - IMAGE_TAG=$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 699582537231.dkr.ecr.ap-south-1.amazonaws.com
+      - REPOSITORY_URI=699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo
   build:
     commands:
-      - echo Building Docker image...
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:latest .
   post_build:
     commands:
-      - echo Pushing Docker image...
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Creating imagedefinitions.json...
-      - printf '[{"name":"nginx-container","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - echo Pushing the Docker image...
+      - docker push $REPOSITORY_URI:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"nginx-container","imageUri":"%s"}]' $REPOSITORY_URI:latest > imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json
