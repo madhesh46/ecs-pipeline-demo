@@ -3,17 +3,21 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo Using prebuilt image madhesh23/my-custom-nginx:1.0
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.ap-south-1.amazonaws.com
+      - REPOSITORY_URI=<your-account-id>.dkr.ecr.ap-south-1.amazonaws.com/ecs-demo
+      - IMAGE_TAG=$CODEBUILD_RESOLVED_SOURCE_VERSION
   build:
     commands:
-      - echo Skipping docker build step
+      - echo Building Docker image...
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
   post_build:
     commands:
-      - echo Build completed successfully
-      - echo Writing imagedefinitions.json...
-      - printf '[{"name":"nginx-container","imageUri":"madhesh23/my-custom-nginx:1.0"}]' > imagedefinitions.json
+      - echo Pushing Docker image...
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Creating imagedefinitions.json...
+      - printf '[{"name":"nginx-container","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 
 artifacts:
-  files:
-    - imagedefinitions.json
+  files: imagedefinitions.json
 
