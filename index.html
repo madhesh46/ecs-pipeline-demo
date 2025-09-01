@@ -6,25 +6,68 @@
   <style>
     body {
       margin: 0;
-      padding: 40px;
-      background-color: #f0f4f8; /* Soft blue-gray background */
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #e9eef5; /* Light gray-blue background */
       color: #333;
+      height: 100vh;
+      display: flex;
+      justify-content: center; /* Horizontal center */
+      align-items: center;     /* Vertical center */
     }
+
+    .container {
+      text-align: center;
+      background: #ffffff;
+      padding: 50px 70px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     h1 {
-      font-size: 2.5em;
-      color: #1a73e8;
-      margin-bottom: 20px;
+      font-size: 2.4em;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #1a73e8, #4285f4, #1a73e8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: slideColor 4s linear infinite;
     }
+
+    @keyframes slideColor {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
     p {
       font-size: 1.2em;
-      color: #555;
+      color: #444;
+      margin: 0;
+      opacity: 0;
+      animation: fadeIn 2s ease-in forwards;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <h1>ECS Pipeline</h1>
-  <p>This website is deployed automatically</p>
+  <div class="container">
+    <h1>welcome</h1>
+    <p>This webpage deployed automatically using Amazon ECS and CodePipeline</p>
+  </div>
 </body>
 </html>
 
