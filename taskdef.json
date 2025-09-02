@@ -4,7 +4,7 @@
   "containerDefinitions": [
     {
       "name": "nginx-container",
-      "image": "madhesh23/my-custom-nginx:1.0",
+      "image": "699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo:latest",
       "cpu": 256,
       "memory": 512,
       "portMappings": [
