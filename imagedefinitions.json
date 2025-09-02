@@ -1,0 +1,7 @@
+[
+  {
+    "name": "nginx-container",
+    "imageUri": "699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-demo-repo:latest"
+  }
+]
+
