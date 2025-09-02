@@ -4,7 +4,7 @@
   "containerDefinitions": [
     {
       "name": "nginx-container",
-      "image": "699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo:update-index-html",
+      "image": "699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo:index-only",
       "cpu": 256,
       "memory": 512,
       "portMappings": [
@@ -15,13 +15,25 @@
         }
       ],
       "essential": true,
+      "command": ["sh", "-c", "cp /tmp/index.html /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"],
       "environment": [],
-      "mountPoints": [],
+      "mountPoints": [
+        {
+          "sourceVolume": "index-volume",
+          "containerPath": "/tmp",
+          "readOnly": false
+        }
+      ],
       "volumesFrom": [],
       "systemControls": []
     }
   ],
-  "volumes": [],
+  "volumes": [
+    {
+      "name": "index-volume",
+      "host": {}
+    }
+  ],
   "placementConstraints": [],
   "requiresCompatibilities": ["EC2"],
   "tags": [

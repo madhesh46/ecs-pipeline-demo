@@ -1,29 +1,17 @@
-# Start from scratch (minimal)
-FROM python:3.11-alpine
+# Start from scratch (empty)
+FROM scratch
 
-# Set working directory
-WORKDIR /app
+# Copy index.html into a temporary folder
+COPY index.html /tmp/index.html
 
-# Copy your HTML file
-COPY index.html .
+# Use nginx from ECR (or install nginx manually if needed)
+# Start command is defined in taskdef
+# Start from scratch (empty)
+FROM scratch
 
-# Expose port
-EXPOSE 80
+# Copy index.html into a temporary folder
+COPY index.html /tmp/index.html
 
-# Run a simple HTTP server
-CMD ["python3", "-m", "http.server", "80"]
-# Start from scratch (minimal)
-FROM python:3.11-alpine
-
-# Set working directory
-WORKDIR /app
-
-# Copy your HTML file
-COPY index.html .
-
-# Expose port
-EXPOSE 80
-
-# Run a simple HTTP server
-CMD ["python3", "-m", "http.server", "80"]
+# Use nginx from ECR (or install nginx manually if needed)
+# Start command is defined in taskdef
 
