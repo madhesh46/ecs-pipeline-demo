@@ -79,7 +79,7 @@
             ],
             "configuration": {
               "ClusterName": "ecs-demo-cluster",
-              "ServiceName": "ecs-demo-service"
+              "ServiceName": "ecs-demo-ec2-service"
             },
             "runOrder": 1
           }
