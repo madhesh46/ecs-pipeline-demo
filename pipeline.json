@@ -79,7 +79,8 @@
             ],
             "configuration": {
               "ClusterName": "ecs-demo-cluster",
-              "ServiceName": "ecs-demo-service"
+              "ServiceName": "ecs-demo-service",
+              "FileName": "imagedefinitions.json"
             },
             "runOrder": 1
           }
@@ -90,3 +91,4 @@
   }
 }
 
+           
