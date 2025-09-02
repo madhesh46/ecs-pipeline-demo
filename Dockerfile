@@ -1,19 +1,29 @@
-
-# Use official lightweight Nginx image
-FROM nginx:alpine
+# Start from scratch (minimal)
+FROM python:3.11-alpine
 
 # Set working directory
-WORKDIR /usr/share/nginx/html
+WORKDIR /app
 
-# Remove default Nginx static files
-RUN rm -rf ./*
-
-# Copy your custom index.html into the container
+# Copy your HTML file
 COPY index.html .
 
-# Expose port 80 to the outside world
+# Expose port
 EXPOSE 80
 
-# Start Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Run a simple HTTP server
+CMD ["python3", "-m", "http.server", "80"]
+# Start from scratch (minimal)
+FROM python:3.11-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy your HTML file
+COPY index.html .
+
+# Expose port
+EXPOSE 80
+
+# Run a simple HTTP server
+CMD ["python3", "-m", "http.server", "80"]
 
