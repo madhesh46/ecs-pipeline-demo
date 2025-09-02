@@ -1,7 +1,7 @@
 {
   "pipeline": {
     "name": "ecs-pipeline",
-    "roleArn": "arn:aws:iam::699582537231:role/AWS-CodePipeline-Service",
+    "roleArn": "arn:aws:iam::699582537231:role/ecsCodePipelineServiceRole",
     "artifactStore": {
       "type": "S3",
       "location": "ecs-pipeline-artifacts-699582537231"
@@ -11,25 +11,25 @@
         "name": "Source",
         "actions": [
           {
-            "name": "Source",
+            "name": "SourceAction",
             "actionTypeId": {
               "category": "Source",
-              "owner": "ThirdParty",
-              "provider": "GitHub",
+              "owner": "AWS",
+              "provider": "CodeCommit",
               "version": "1"
+            },
+            "runOrder": 1,
+            "configuration": {
+              "RepositoryName": "ecs-pipeline-demo",
+              "BranchName": "main"
             },
             "outputArtifacts": [
               {
-                "name": "SourceOutput"
+                "name": "SourceArtifact"
               }
             ],
-            "configuration": {
-              "Owner": "madhesh46",
-              "Repo": "ecs-pipeline-demo",
-              "Branch": "main",
-              "OAuthToken": "<GITHUB_TOKEN>"
-            },
-            "runOrder": 1
+            "inputArtifacts": [],
+            "region": "ap-south-1"
           }
         ]
       },
@@ -37,27 +37,28 @@
         "name": "Build",
         "actions": [
           {
-            "name": "Build",
+            "name": "BuildAction",
             "actionTypeId": {
               "category": "Build",
               "owner": "AWS",
               "provider": "CodeBuild",
               "version": "1"
             },
-            "inputArtifacts": [
-              {
-                "name": "SourceOutput"
-              }
-            ],
-            "outputArtifacts": [
-              {
-                "name": "BuildOutput"
-              }
-            ],
+            "runOrder": 1,
             "configuration": {
               "ProjectName": "ecs-build-project"
             },
-            "runOrder": 1
+            "outputArtifacts": [
+              {
+                "name": "BuildArtifact"
+              }
+            ],
+            "inputArtifacts": [
+              {
+                "name": "SourceArtifact"
+              }
+            ],
+            "region": "ap-south-1"
           }
         ]
       },
@@ -65,24 +66,26 @@
         "name": "Deploy",
         "actions": [
           {
-            "name": "Deploy",
+            "name": "DeployAction",
             "actionTypeId": {
               "category": "Deploy",
               "owner": "AWS",
               "provider": "ECS",
               "version": "1"
             },
-            "inputArtifacts": [
-              {
-                "name": "BuildOutput"
-              }
-            ],
+            "runOrder": 1,
             "configuration": {
               "ClusterName": "ecs-demo-cluster",
               "ServiceName": "ecs-demo-ec2-service",
               "FileName": "imagedefinitions.json"
             },
-            "runOrder": 1
+            "outputArtifacts": [],
+            "inputArtifacts": [
+              {
+                "name": "BuildArtifact"
+              }
+            ],
+            "region": "ap-south-1"
           }
         ]
       }
