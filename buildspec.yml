@@ -2,6 +2,8 @@ version: 0.2
 
 env:
   variables:
+    AWS_ACCOUNT_ID: "699582537231"
+    AWS_REGION: "ap-south-1"
     REPOSITORY_URI: 699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo
     IMAGE_TAG: latest
 
@@ -9,7 +11,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
   build:
     commands:
       - echo Building the Docker image...
@@ -18,7 +20,7 @@ phases:
     commands:
       - echo Pushing the Docker image...
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Writing image definitions file...
+      - echo Writing imagedefinitions.json file...
       - printf '[{"name":"nginx-container","imageUri":"%s"}]' "$REPOSITORY_URI:$IMAGE_TAG" > imagedefinitions.json
 
 artifacts:
