@@ -19,10 +19,10 @@
               "version": "1"
             },
             "configuration": {
-              "Owner": "madhesh46",
-              "Repo": "ecs-pipeline-demo",
-              "Branch": "main",
-              "PollForSourceChanges": "true"
+              "ConnectionArn": "arn:aws:events:ap-south-1:699582537231:connection/ecs-github-connection/22d62403-b117-4da3-92d7-60703722a06d",
+              "FullRepositoryId": "madhesh46/ecs-pipeline-demo",
+              "BranchName": "main",
+              "DetectChanges": "true"
             },
             "outputArtifacts": [
               {
@@ -46,7 +46,7 @@
               "version": "1"
             },
             "configuration": {
-              "ProjectName": "ecs-build-project"
+              "ProjectName": "ecs-demo-build"
             },
             "inputArtifacts": [
               {
@@ -76,7 +76,7 @@
             },
             "configuration": {
               "ClusterName": "ecs-demo-cluster",
-              "ServiceName": "ecs-demo-ec2-service",
+              "ServiceName": "ecs-demo-service",
               "FileName": "imagedefinitions.json"
             },
             "inputArtifacts": [
