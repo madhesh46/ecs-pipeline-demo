@@ -1,17 +1,12 @@
-# Start from scratch (empty)
-FROM scratch
+# Use official Nginx image (not alpine, this is the full Debian-based one)
+FROM nginx:latest
 
-# Copy index.html into a temporary folder
-COPY index.html /tmp/index.html
+# Copy your index.html into nginx's default web root
+COPY index.html /usr/share/nginx/html/index.html
 
-# Use nginx from ECR (or install nginx manually if needed)
-# Start command is defined in taskdef
-# Start from scratch (empty)
-FROM scratch
+# Expose port 80 so ECS/ALB can route traffic
+EXPOSE 80
 
-# Copy index.html into a temporary folder
-COPY index.html /tmp/index.html
-
-# Use nginx from ECR (or install nginx manually if needed)
-# Start command is defined in taskdef
+# Use the default nginx start command
+CMD ["nginx", "-g", "daemon off;"]
 
