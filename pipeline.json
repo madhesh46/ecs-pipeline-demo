@@ -18,19 +18,18 @@
               "provider": "GitHub",
               "version": "1"
             },
-            "configuration": {
-              "ConnectionArn": "arn:aws:events:ap-south-1:699582537231:connection/ecs-github-connection/22d62403-b117-4da3-92d7-60703722a06d",
-              "FullRepositoryId": "madhesh46/ecs-pipeline-demo",
-              "BranchName": "main",
-              "DetectChanges": "true"
-            },
             "outputArtifacts": [
               {
                 "name": "SourceArtifact"
               }
             ],
-            "runOrder": 1,
-            "region": "ap-south-1"
+            "configuration": {
+              "Owner": "madhesh46",
+              "Repo": "ecs-pipeline-demo",
+              "Branch": "main",
+              "ConnectionArn": "arn:aws:events:ap-south-1:699582537231:connection/ecs-github-connection/22d62403-b117-4da3-92d7-60703722a06d"
+            },
+            "runOrder": 1
           }
         ]
       },
@@ -45,10 +44,6 @@
               "provider": "CodeBuild",
               "version": "1"
             },
-            "configuration": {
-              "ProjectName": "ecs-build-project",
-              "BuildSpec": "buildspec.yml"
-            },
             "inputArtifacts": [
               {
                 "name": "SourceArtifact"
@@ -59,8 +54,10 @@
                 "name": "BuildArtifact"
               }
             ],
-            "runOrder": 1,
-            "region": "ap-south-1"
+            "configuration": {
+              "ProjectName": "ecs-build-project"
+            },
+            "runOrder": 1
           }
         ]
       },
@@ -75,23 +72,21 @@
               "provider": "ECS",
               "version": "1"
             },
-            "configuration": {
-              "ClusterName": "ecs-demo-cluster",
-              "ServiceName": "ecs-demo-service",
-              "FileName": "imagedefinitions.json"
-            },
             "inputArtifacts": [
               {
                 "name": "BuildArtifact"
               }
             ],
-            "runOrder": 1,
-            "region": "ap-south-1"
+            "configuration": {
+              "ClusterName": "ecs-demo-cluster",
+              "ServiceName": "ecs-demo-service",
+              "FileName": "imagedefinitions.json"
+            },
+            "runOrder": 1
           }
         ]
       }
-    ],
-    "version": 1
+    ]
   }
 }
 

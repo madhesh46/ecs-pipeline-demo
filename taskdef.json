@@ -1,10 +1,14 @@
 {
-  "family": "nginx-task",
-  "networkMode": "bridge",
+  "family": "ecs-demo-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::699582537231:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
-      "name": "nginx-container",
-      "image": "699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo:latest",
+      "name": "ecs-demo-container",
+      "image": "699582537231.dkr.ecr.ap-south-1.amazonaws.com/my-nginx:latest",
       "cpu": 256,
       "memory": 512,
       "portMappings": [
@@ -17,16 +21,15 @@
       "essential": true,
       "environment": [],
       "mountPoints": [],
-      "volumesFrom": []
-    }
-  ],
-  "volumes": [],
-  "placementConstraints": [],
-  "requiresCompatibilities": ["EC2"],
-  "tags": [
-    {
-      "key": "Project",
-      "value": "ECSPipelineDemo"
+      "volumesFrom": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/ecs-demo-service",
+          "awslogs-region": "ap-south-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     }
   ]
 }
