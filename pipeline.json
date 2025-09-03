@@ -38,7 +38,7 @@
         "name": "Build",
         "actions": [
           {
-            "name": "BuildAction",
+            "name": "Build",
             "actionTypeId": {
               "category": "Build",
               "owner": "AWS",
@@ -46,7 +46,8 @@
               "version": "1"
             },
             "configuration": {
-              "ProjectName": "ecs-demo-build"
+              "ProjectName": "ecs-build-project",
+              "BuildSpec": "buildspec.yml"
             },
             "inputArtifacts": [
               {
@@ -84,7 +85,6 @@
                 "name": "BuildArtifact"
               }
             ],
-            "outputArtifacts": [],
             "runOrder": 1,
             "region": "ap-south-1"
           }
