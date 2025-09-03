@@ -1,7 +1,7 @@
 [
   {
-    "name": "nginx-container",
-    "imageUri": "699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-pipeline-demo:latest"
+    "name": "ecs-demo-container",
+    "imageUri": "699582537231.dkr.ecr.ap-south-1.amazonaws.com/ecs-demo-app:latest"
   }
 ]
 
